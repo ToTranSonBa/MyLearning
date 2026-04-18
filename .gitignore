@@ -1,0 +1,84 @@
+# Visual Studio / .NET
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+.nuget/
+.vspackages/
+
+# MSBuild
+*.userprefs
+
+# Rider/IDE
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+TestResults/
+*.trx
+
+# Publish
+publish/
+
+# User secrets and local settings
+secrets.json
+appsettings.*.Development.json
+appsettings.*.Local.json
+
+# Entity Framework
+Migrations/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Docker
+docker-compose.override.yml
+.env
+.env.*
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Coverage / Test output
+coverage/
+*.coverage
+*.coveragexml
+
+# JetBrains
+*.idea/
+
+# Others
+*.user
+*.rsuser
+*.suo
+*.dotCover
+*.ncrunch*
+_ReSharper*/
+*.dotSettings.user
