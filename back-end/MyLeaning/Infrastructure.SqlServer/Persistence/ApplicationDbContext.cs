@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.FlashCard;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,60 @@ namespace Infrastructure.SqlServer.Persistence
 
             // ✔️ Config Identity tables - loại bỏ tiền tố AspNet
             ConfigureIdentity(builder);
+            ConfigureFlashCard(builder);
+        }
+
+        private void ConfigureFlashCard(ModelBuilder builder)
+        {
+            builder.Entity<Deck>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("Deck", schema: "dbo");
+                
+                // Indexes
+                entity.HasIndex(e => e.AuthorId).HasDatabaseName("IDX_Deck_AuthorId");
+            });
+            builder.Entity<Card>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("Card", schema: "dbo");
+                    
+                // Indexes
+                entity.HasIndex(e => e.DeckId).HasDatabaseName("IDX_Card_DeckId");
+            });
+    
+            builder.Entity<UserDeck>(entity =>
+            {
+                entity.HasKey(entity => new { entity.UserId, entity.DeckId });
+                entity.ToTable("UserDeck", schema: "dbo");
+                    
+                // Composite key
+                entity.HasKey(e => new { e.UserId, e.DeckId });
+                    
+                // Indexes
+                entity.HasIndex(e => e.UserId).HasDatabaseName("IDX_UserDeck_UserId");
+                entity.HasIndex(e => e.DeckId).HasDatabaseName("IDX_UserDeck_DeckId");
+            });
+            builder.Entity<CardMetaData>(entity =>
+            {
+                entity.HasKey(e => new { e.CardId, e.Key });
+                entity.ToTable("CardMetaData", schema: "dbo");
+                    
+                // Indexes
+                entity.HasIndex(e => e.CardId).HasDatabaseName("IDX_CardMetaData_CardId");
+            });
+            builder.Entity<FlashcardReview>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.CardId });
+                entity.ToTable("UserCardProcess", schema: "dbo");
+                    
+                // Composite key
+                entity.HasKey(e => new { e.UserId, e.CardId });
+                    
+                // Indexes
+                entity.HasIndex(e => e.UserId).HasDatabaseName("IDX_UserCardProcess_UserId");
+                entity.HasIndex(e => e.CardId).HasDatabaseName("IDX_UserCardProcess_CardId");
+            });
         }
 
         /// <summary>
