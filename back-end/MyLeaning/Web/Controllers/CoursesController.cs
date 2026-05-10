@@ -1,4 +1,4 @@
-using Application.DTOs.CourseDto;
+using Application.DTOs.CourseDtos;
 using Application.Features.Courses.Commands;
 using Application.Features.Courses.Queries;
 using Domain.Courses;

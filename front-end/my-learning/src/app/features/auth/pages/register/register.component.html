@@ -1,0 +1,54 @@
+<div class="register-wrapper">
+  <mat-card class="register-card">
+    <h2>Create Account</h2>
+
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+
+        <input matInput formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+        />
+
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>
+            {{ hidePassword ? "visibility_off" : "visibility" }}
+          </mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label> Confirm Password </mat-label>
+
+        <input
+          matInput
+          [type]="hideConfirm ? 'password' : 'text'"
+          formControlName="confirmPassword"
+        />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width">
+        Register
+      </button>
+    </form>
+
+    <p>
+      Already have account?
+
+      <a routerLink="/login"> Login </a>
+    </p>
+  </mat-card>
+</div>

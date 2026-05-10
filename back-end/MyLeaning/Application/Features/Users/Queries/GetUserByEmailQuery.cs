@@ -1,5 +1,6 @@
 using Application.Common.Interfaces;
-using Application.DTOs.UserDto;
+using Application.Common.Mapping;
+using Application.DTOs.UserDtos;
 using MediatR;
 
 namespace Application.Features.Users.Queries;
@@ -21,6 +22,6 @@ public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, UserDt
         if (user == null)
             return null;
 
-        return new UserDto(user.Id, user.UserName, user.Email, user.FullName);
+        return user.ToUserDto();
     }
 }

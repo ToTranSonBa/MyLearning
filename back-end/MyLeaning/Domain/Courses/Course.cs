@@ -8,6 +8,7 @@ namespace Domain.Courses;
 /// </summary>
 public class Course : BaseEntity
 {
+    public Guid Id { get; set; } 
     /// <summary>
     /// Course title (e.g., "Beginner Japanese", "Business Japanese")
     /// </summary>
@@ -63,6 +64,7 @@ public class Course : BaseEntity
 
         return new Course
         {
+             Id = Guid.NewGuid(),
             Title = title,
             Description = description,
             Level = level,

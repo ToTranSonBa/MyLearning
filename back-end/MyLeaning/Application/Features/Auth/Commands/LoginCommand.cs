@@ -1,6 +1,8 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Common.Mapping;
 using Application.DTOs.AuthDto;
+using Application.DTOs.UserDtos;
 using Application.Features.Auth.Queries;
 using MediatR;
 
@@ -34,7 +36,7 @@ namespace Application.Features.Auth.Commands;
 /// }
 /// </code>
 /// </example>
-public record LoginCommand(string EmailOrUsername, string Password) : IRequest<AuthResponseDto>;
+public record LoginCommand(LoginDto Login) : IRequest<AuthResponseDto>;
 
 public class LoginHandler : IRequestHandler<LoginCommand, AuthResponseDto>
 {
@@ -61,7 +63,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, AuthResponseDto>
     {
         // Command 1: Validate credentials
         var user = await _mediator.Send(
-            new ValidateCredentialsCommand(request.EmailOrUsername, request.Password),
+            new ValidateCredentialsCommand(request.Login.EmailOrUsername, request.Login.Password),
             cancellationToken);
 
         if (user is null)
@@ -87,6 +89,6 @@ public class LoginHandler : IRequestHandler<LoginCommand, AuthResponseDto>
             new UpdateLastLoginCommand(user.Id),
             cancellationToken);
 
-        return new AuthResponseDto(accessToken, refreshToken, user.Id, user.UserName, user.Email);
+        return new AuthResponseDto(accessToken, refreshToken, user.ToUserDto());
     }
 }

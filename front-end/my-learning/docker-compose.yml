@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  angular-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-learning-app
+    ports:
+      - "4200:4200"
+    environment:
+      - NODE_ENV=production
+    # Uncomment để chạy ở chế độ development
+    # command: npm start
+    restart: unless-stopped

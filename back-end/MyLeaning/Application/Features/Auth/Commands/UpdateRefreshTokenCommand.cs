@@ -36,7 +36,7 @@ public class UpdateRefreshTokenHandler : IRequestHandler<UpdateRefreshTokenComma
         user.RefreshToken = request.RefreshToken;
         user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(request.ExpiryDays);
 
-        _userRepository.Update(user);
+        await _userRepository.Update(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

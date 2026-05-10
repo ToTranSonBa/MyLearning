@@ -17,7 +17,10 @@ namespace Infrastructure.SqlServer.Mappings
                 FullName = user.FullName,
                 Email = user.Email,
                 PasswordHash = user.PasswordHash,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                RefreshToken = user.RefreshToken,
+                RefreshTokenExpiryTime = user.RefreshTokenExpiryTime ?? DateTime.UtcNow.AddMinutes(15),
+                IsEmailConfirmed = user.EmailConfirmed,
             };
         }
 

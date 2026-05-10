@@ -7,11 +7,11 @@ public class LoginValidator : AbstractValidator<LoginCommand>
 {
     public LoginValidator()
     {
-        RuleFor(x => x.EmailOrUsername)
+        RuleFor(x => x.Login.EmailOrUsername)
             .NotEmpty().WithMessage("Email or username is required.")
             .MaximumLength(100).WithMessage("Email or username cannot exceed 100 characters.");
 
-        RuleFor(x => x.Password)
+        RuleFor(x => x.Login.Password)
             .NotEmpty().WithMessage("Password is required.")
             .MaximumLength(128).WithMessage("Password cannot exceed 128 characters.");
     }

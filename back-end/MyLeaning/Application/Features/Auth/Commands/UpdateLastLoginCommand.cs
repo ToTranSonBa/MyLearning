@@ -34,7 +34,7 @@ public class UpdateLastLoginHandler : IRequestHandler<UpdateLastLoginCommand, Un
             throw new NotFoundException("User not found.");
 
         user.LastLoginAt = DateTime.UtcNow;
-        _userRepository.Update(user);
+        await _userRepository.Update(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

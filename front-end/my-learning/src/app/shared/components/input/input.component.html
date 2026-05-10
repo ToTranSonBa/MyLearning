@@ -1,0 +1,7 @@
+<input
+  matInput
+  [type]="type()"
+  [placeholder]="placeholder()"
+  [value]="value"
+  (input)="updateValue($any($event.target).value)"
+/>

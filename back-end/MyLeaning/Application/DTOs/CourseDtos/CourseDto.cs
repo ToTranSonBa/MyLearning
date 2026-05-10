@@ -1,6 +1,6 @@
 using Domain.Courses;
 
-namespace Application.DTOs.CourseDto;
+namespace Application.DTOs.CourseDtos;
 
 /// <summary>
 /// Data Transfer Object for course response.

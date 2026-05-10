@@ -1,0 +1,28 @@
+.header {
+    height: 64px;
+    background: #2563eb;
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 0 24px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+.user-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+a {
+    width: 100px;
+    margin-left: 20px;
+    padding: 5px;
+    background-color: white;
+}

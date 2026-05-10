@@ -1,3 +1,5 @@
+using Application.DTOs.UserDtos;
+
 namespace Application.DTOs.AuthDto;
 
 /// <summary>
@@ -9,8 +11,4 @@ public record AuthResponseDto(
     /// <summary>Refresh token for token renewal (valid for 7 days)</summary>
     string RefreshToken,
     /// <summary>User ID</summary>
-    Guid UserId,
-    /// <summary>Username</summary>
-    string UserName,
-    /// <summary>User email address</summary>
-    string Email);
+    UserDto User);

@@ -1,7 +1,9 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Common.Mapping;
 using Application.DTOs.AuthDto;
 using Application.Features.Auth.Queries;
+using Domain.Identity;
 using MediatR;
 
 namespace Application.Features.Auth.Commands;
@@ -31,7 +33,7 @@ namespace Application.Features.Auth.Commands;
 /// }
 /// </code>
 /// </example>
-public record RegisterCommand(string UserName, string Email, string Password, string FullName) : IRequest<AuthResponseDto>;
+public record RegisterCommand(RegisterDto register) : IRequest<AuthResponseDto>;
 
 public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
 {
@@ -62,29 +64,30 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
     {
         // Query 1: Check email uniqueness
         var isEmailUnique = await _mediator.Send(
-            new IsEmailUniqueQuery(request.Email),
+            new IsEmailUniqueQuery(request.register.Email),
             cancellationToken);
         if (!isEmailUnique)
             throw new BadRequestException("Email already registered.");
 
         // Query 2: Check username uniqueness
         var isUsernameUnique = await _mediator.Send(
-            new IsUsernameUniqueQuery(request.UserName),
+            new IsUsernameUniqueQuery(request.register.UserName),
             cancellationToken);
         if (!isUsernameUnique)
             throw new BadRequestException("Username already taken.");
 
         // Command 1: Hash password
         var passwordHash = await _mediator.Send(
-            new HashPasswordCommand(request.Password),
+            new HashPasswordCommand(request.register.Password),
             cancellationToken);
 
         // Create user
-        var user = new Domain.Identity.User
+        var user = new User
         {
-            UserName = request.UserName,
-            Email = request.Email,
-            FullName = request.FullName,
+            Id = Guid.NewGuid(),
+            UserName = request.register.UserName,
+            Email = request.register.Email,
+            FullName = request.register.FullName,
             PasswordHash = passwordHash,
             CreatedAt = DateTime.UtcNow,
             IsEmailConfirmed = false
@@ -114,6 +117,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
             new SendConfirmationEmailCommand(user.Email, user.FullName, confirmationLink),
             cancellationToken);
 
-        return new AuthResponseDto(accessToken, refreshToken, user.Id, user.UserName, user.Email);
+        return new AuthResponseDto(accessToken, refreshToken, user.ToUserDto());
     }
 }

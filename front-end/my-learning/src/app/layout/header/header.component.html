@@ -1,0 +1,14 @@
+<header class="header">
+  <h2>My Learning App</h2>
+
+  <div class="user-status">
+    @if (!islogin()) {
+      <a mat-button="Outlined" routerLink="/login">Login</a>
+      <a mat-button="Outlined" routerLink="/register">Register</a>
+    } @else {
+      <button mat-raised-button color="primary" (click)="logout()">
+        Logout
+      </button>
+    }
+  </div>
+</header>

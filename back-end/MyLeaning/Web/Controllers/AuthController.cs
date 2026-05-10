@@ -3,6 +3,7 @@ using Application.DTOs.AuthDto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers;
 
@@ -37,9 +38,9 @@ public class AuthController : ControllerBase
         try
         {
             _logger.LogInformation("User registration attempt for email: {Email}", dto.Email);
-            var command = new RegisterCommand(dto.UserName, dto.Email, dto.Password, dto.FullName);
+            var command = new RegisterCommand(dto);
             var result = await _mediator.Send(command);
-            _logger.LogInformation("User registered successfully: {UserId}", result.UserId);
+            _logger.LogInformation("User registered successfully: {UserId}", result.User.Id);
             return Ok(result);
         }
         catch (Exception ex)
@@ -64,9 +65,9 @@ public class AuthController : ControllerBase
         try
         {
             _logger.LogInformation("Login attempt for: {EmailOrUsername}", dto.EmailOrUsername);
-            var command = new LoginCommand(dto.EmailOrUsername, dto.Password);
+            var command = new LoginCommand(dto);
             var result = await _mediator.Send(command);
-            _logger.LogInformation("User logged in successfully: {UserId}", result.UserId);
+            _logger.LogInformation("User logged in successfully: {UserId}", result.User.Id);
             return Ok(result);
         }
         catch (Exception ex)

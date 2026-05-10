@@ -1,5 +1,6 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Common.Mapping;
 using Application.DTOs.AuthDto;
 using Application.Features.Auth.Queries;
 using MediatR;
@@ -54,6 +55,6 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, AuthResp
             new UpdateRefreshTokenCommand(user.Id, newRefreshToken, 7),
             cancellationToken);
 
-        return new AuthResponseDto(newAccessToken, newRefreshToken, user.Id, user.UserName, user.Email);
+        return new AuthResponseDto(newAccessToken, newRefreshToken, user.ToUserDto());
     }
 }

@@ -12,7 +12,6 @@ namespace Domain.Common
 
         protected BaseEntity()
         {
-            Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
         }
 

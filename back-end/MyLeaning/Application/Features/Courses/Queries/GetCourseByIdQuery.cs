@@ -1,6 +1,6 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
-using Application.DTOs.CourseDto;
+using Application.DTOs.CourseDtos;
 using Domain.Courses;
 using MediatR;
 
